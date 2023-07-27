@@ -16,8 +16,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 public class WebSecurityConfig {
 
-    private  static  final String[] WHITE_LIST_URLS={
-       "/hello","/register"
+    private static final String[] WHITE_LIST_URLS = {
+            "/hello",
+            "/register",
+            "/verifyRegistration*",
+            "/resendVerificationToken*"
+
     };
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -26,11 +30,14 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.
-              csrf().disable()
-                .authorizeRequests()
-                .requestMatchers(WHITE_LIST_URLS).permitAll()
-                .anyRequest().authenticated();
+        http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers(WHITE_LIST_URLS).permitAll();
+
                 return  http.build();
     }
 }
