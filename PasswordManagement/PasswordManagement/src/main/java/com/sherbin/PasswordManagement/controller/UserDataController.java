@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
 @RestController
+@CrossOrigin(origins="http://localhost:4200/")
 public class UserDataController {
 
     @Autowired
@@ -30,10 +33,10 @@ public class UserDataController {
    {
        return userDataService.findDataByUserId(id);
    }
-    @DeleteMapping("delete/{id}")
-    public String deleteTask(@PathVariable int id){
+    @DeleteMapping("user/{userDataId}")
+    public String deleteTask(@PathVariable int userDataId){
 
-        userDataService.deleteTaskById(id);
+        userDataService.deleteTaskById(userDataId);
 
         return "Success";
     }

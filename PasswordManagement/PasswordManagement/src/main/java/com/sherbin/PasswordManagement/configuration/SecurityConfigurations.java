@@ -7,9 +7,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @EnableWebSecurity
 @Configuration
+@CrossOrigin(origins="http://localhost:4200/")
 public class SecurityConfigurations {
 
     private static final String[] WHITE_LIST_URLS = {
@@ -17,9 +19,12 @@ public class SecurityConfigurations {
             "/user/{id}",
             "/{userId}/data",
             "/data",
-            "/user/{id}",
+            "user/{userId}",
             "/data/{id}",
-            "delete/{id}",
+            "user/{userDataId}",
+            "/login",
+            "/userid",
+            "/loginalluser"
 
 
     };
