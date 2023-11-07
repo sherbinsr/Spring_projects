@@ -7,6 +7,7 @@ import com.stroreimg.img.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,6 +47,31 @@ public class ImgApplication {
 			.contentType(MediaType.valueOf("image/png"))
 			.body(imageData);
 	}
+	@GetMapping("/all")
+	public ResponseEntity<List<byte[]>> getAllImages() {
+		List<ImageData> images = storageRepository.findAll();
+
+		List<byte[]> imageDataList = new ArrayList<>();
+		for (ImageData image : images) {
+			imageDataList.add(image.getImageData());
+		}
+
+		return ResponseEntity.ok(imageDataList);
+	}
+
+
+
+//	@GetMapping("/all")
+//	public ResponseEntity<List<ImageData>> getAllImages() {
+//		List<ImageData> images = storageRepository.findAll();
+//		if (images.isEmpty()) {
+//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//		} else {
+//			return new ResponseEntity<>(images, HttpStatus.OK);
+//		}
+//	}
+
+
 	/*
 	@GetMapping("/image/{id}")
 	public ResponseEntity<?> getImageJson(@PathVariable Long id) {
